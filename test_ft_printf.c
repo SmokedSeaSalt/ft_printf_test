@@ -6,25 +6,27 @@ int main(void)
 {
 	int ret;
 
-	//if input string is NULL
-	ret = printf((char *)NULL);
+	//basic input
+	ret = ft_printf("test");
 	printf(" | ret = %d\n", ret);
+	fflush(stdout);
 
+	//if input string is NULL
 	ret = ft_printf((char *)NULL);
 	printf(" | ret = %d\n", ret);
+	fflush(stdout);
 
 	//if input is valid but empty
-	ret = printf("");
-	printf(" | ret = %d\n", ret);
-
 	ret = ft_printf("");
 	printf(" | ret = %d\n", ret);
-
-
-
-	ret = printf("%s", (char *)NULL);
+	fflush(stdout);
+/*
+	//if %s is NULL
+	ret = ft_printf("%s", (char *)NULL);
 	printf(" | ret = %d\n", ret);
 
+	//if %p is NULL
 	ret = printf("%p", (char *)NULL);
 	printf(" | ret = %d\n", ret);
+*/
 }
