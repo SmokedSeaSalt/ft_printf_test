@@ -1,15 +1,15 @@
 LIBPATH := ../ft_printf
-LIBRARY := $(LIBPATH)/libft.a
+LIBRARY := $(LIBPATH)/libftprintf.a
 
 OUTDIR = outs/
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address -lbsd -I $(LIBPATH)/
 
-SRCS = test_ft_printf.cc
+SRCS = ft_printf.c
 
 # Create a list of output .out files based on test.c files
-OUTS = $(patsubst %.c, $(OUTDIR)test_%.out, $(ALLSRCS))
+OUTS = $(patsubst %.c, $(OUTDIR)test_%.out, $(SRCS))
 
 # Default target: build all tests
 all: $(LIBRARY) $(OUTDIR) $(OUTS)
