@@ -14,7 +14,8 @@ void test_c();
 void test_s();
 void test_d();
 void test_i();
-
+void test_u();
+void test_pct();
 
 int main(void)
 {
@@ -24,10 +25,10 @@ int main(void)
 //	test_p();
 	test_d();
 	test_i();
-//	test_u();
+	test_u();
 //	test_x();
 //	test_X();
-//	test_pct();
+	test_pct();
 
 	//test_multiple args();
 
@@ -224,13 +225,13 @@ void test_d()
 	arg1.argddigit = -2147483648;
 	test_1args("-2147483648 = %d", arg1, testcount++);
 	arg1.argddigit = 123;
-	test_1args("2147483647 = %d", arg1, testcount++);
+	test_1args("123 = %d", arg1, testcount++);
 	arg1.argddigit = -456;
-	test_1args("-2147483648 = %d", arg1, testcount++);
+	test_1args("-456 = %d", arg1, testcount++);
 	arg1.argddigit = 1;
-	test_1args("2147483647 = %d", arg1, testcount++);
+	test_1args("1 = %d", arg1, testcount++);
 	arg1.argddigit = 10;
-	test_1args("-2147483648 = %d", arg1, testcount++);
+	test_1args("10 = %d", arg1, testcount++);
 
 	printf("\n");
 }
@@ -243,25 +244,70 @@ void test_i()
 
 	printf("int tests:\n");
 
-	arg1.argddigit = 0;
+	arg1.argidigit = 0;
 	test_1args("0 = %i", arg1, testcount++);
-	arg1.argddigit = -0;
+	arg1.argidigit = -0;
 	test_1args("-1 = %i", arg1, testcount++);
-	arg1.argddigit = 2147483647;
+	arg1.argidigit = 2147483647;
 	test_1args("2147483647 = %i", arg1, testcount++);
-	arg1.argddigit = -2147483648;
+	arg1.argidigit = -2147483648;
 	test_1args("-2147483648 = %i", arg1, testcount++);
-	arg1.argddigit = 123;
-	test_1args("2147483647 = %i", arg1, testcount++);
-	arg1.argddigit = -456;
-	test_1args("-2147483648 = %i", arg1, testcount++);
-	arg1.argddigit = 1;
-	test_1args("2147483647 = %i", arg1, testcount++);
-	arg1.argddigit = 10;
-	test_1args("-2147483648 = %i", arg1, testcount++);
+	arg1.argidigit = 123;
+	test_1args("123 = %i", arg1, testcount++);
+	arg1.argidigit = -456;
+	test_1args("-456 = %i", arg1, testcount++);
+	arg1.argidigit = 1;
+	test_1args("1 = %i", arg1, testcount++);
+	arg1.argidigit = 10;
+	test_1args("10 = %i", arg1, testcount++);
 
 	printf("\n");
 }
+
+void test_u()
+{
+	int testcount = 1;
+
+	union argUnion arg1;
+
+	printf("unsigned int tests:\n");
+
+	arg1.argudigit = 0;
+	test_1args("0 = %i", arg1, testcount++);
+	arg1.argudigit = -0;
+	test_1args("-1 = %i", arg1, testcount++);
+	arg1.argudigit = 4294967295;
+	test_1args("4294967295 = %i", arg1, testcount++);
+	arg1.argudigit = 123;
+	test_1args("123 = %i", arg1, testcount++);
+	arg1.argudigit = -456;
+	test_1args("-456 = %i", arg1, testcount++);
+	arg1.argudigit = 1;
+	test_1args("1 = %i", arg1, testcount++);
+	arg1.argudigit = 10;
+	test_1args("10 = %i", arg1, testcount++);
+
+	printf("\n");
+}
+
+void test_pct()
+{
+	int testcount = 1;
+
+	union argUnion arg1;
+
+	printf("percentage %% tests:\n");
+	
+	test_0args("%%", testcount++);
+	test_0args("%%%% %%", testcount++);
+	arg1.argddigit = 42;
+	test_1args("this is %d%%", arg1, testcount++);
+
+	printf("\n");
+}
+
+
+
 
 /*
 	//if %p is NULL
