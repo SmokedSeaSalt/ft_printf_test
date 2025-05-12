@@ -307,8 +307,6 @@ void test_pct()
 }
 
 
-
-
 /*
 	//if %p is NULL
 	ret = printf("%p", (char *)NULL);
