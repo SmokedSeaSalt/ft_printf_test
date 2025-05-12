@@ -4,7 +4,8 @@ LIBRARY := $(LIBPATH)/libftprintf.a
 OUTDIR = outs/
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address -lbsd -I $(LIBPATH)/
+CFLAGS = -Wno-format-security -g3 -lbsd -I $(LIBPATH)/
+FULLDEBUGFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 SRCS = ft_printf.c
 

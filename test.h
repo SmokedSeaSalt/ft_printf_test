@@ -12,5 +12,16 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
+union argUnion
+{
+	char argchar;
+	char *argstring;
+	void *argpointer;
+	int argddigit;
+	int argidigit;
+	unsigned int argudigit;
+	unsigned int arglhex;
+	unsigned int arguhex;
+};
 
 #endif
