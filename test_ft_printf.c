@@ -12,9 +12,12 @@
 void test_basics();
 void test_c();
 void test_s();
+void test_p();
 void test_d();
 void test_i();
 void test_u();
+void test_lx();
+void test_ux();
 void test_pct();
 
 int main(void)
@@ -22,12 +25,12 @@ int main(void)
 	test_basics();
 	test_c();
 	test_s();
-//	test_p();
+	test_p();
 	test_d();
 	test_i();
 	test_u();
-//	test_x();
-//	test_X();
+	test_lx();
+	test_ux();
 	test_pct();
 
 	//test_multiple args();
@@ -273,19 +276,89 @@ void test_u()
 	printf("unsigned int tests:\n");
 
 	arg1.argudigit = 0;
-	test_1args("0 = %i", arg1, testcount++);
+	test_1args("0 = %u", arg1, testcount++);
 	arg1.argudigit = -0;
-	test_1args("-1 = %i", arg1, testcount++);
+	test_1args("-1 = %u", arg1, testcount++);
 	arg1.argudigit = 4294967295;
-	test_1args("4294967295 = %i", arg1, testcount++);
+	test_1args("4294967295 = %u", arg1, testcount++);
 	arg1.argudigit = 123;
-	test_1args("123 = %i", arg1, testcount++);
+	test_1args("123 = %u", arg1, testcount++);
 	arg1.argudigit = -456;
-	test_1args("-456 = %i", arg1, testcount++);
+	test_1args("-456 = %u", arg1, testcount++);
 	arg1.argudigit = 1;
-	test_1args("1 = %i", arg1, testcount++);
+	test_1args("1 = %u", arg1, testcount++);
 	arg1.argudigit = 10;
-	test_1args("10 = %i", arg1, testcount++);
+	test_1args("10 = %u", arg1, testcount++);
+
+	printf("\n");
+}
+
+void test_lx()
+{
+	int testcount = 1;
+
+	union argUnion arg1;
+
+	printf("lowercase hex tests:\n");
+
+	arg1.arglhex = 0;
+	test_1args("0 = %x", arg1, testcount++);
+	arg1.arglhex = -0;
+	test_1args("-1 = %x", arg1, testcount++);
+	arg1.arglhex = 4294967295;
+	test_1args("4294967295 = %x", arg1, testcount++);
+	arg1.arglhex = 123;
+	test_1args("123 = %x", arg1, testcount++);
+	arg1.arglhex = -456;
+	test_1args("-456 = %x", arg1, testcount++);
+	arg1.arglhex = 1;
+	test_1args("1 = %x", arg1, testcount++);
+	arg1.arglhex = 10;
+	test_1args("10 = %x", arg1, testcount++);
+
+	printf("\n");
+}
+
+void test_ux()
+{
+	int testcount = 1;
+
+	union argUnion arg1;
+
+	printf("uppercase hex tests:\n");
+
+	arg1.arguhex = 0;
+	test_1args("0 = %X", arg1, testcount++);
+	arg1.arguhex = -0;
+	test_1args("-1 = %X", arg1, testcount++);
+	arg1.arguhex = 4294967295;
+	test_1args("4294967295 = %X", arg1, testcount++);
+	arg1.arguhex = 123;
+	test_1args("123 = %X", arg1, testcount++);
+	arg1.arguhex = -456;
+	test_1args("-456 = %X", arg1, testcount++);
+	arg1.arguhex = 1;
+	test_1args("1 = %X", arg1, testcount++);
+	arg1.arguhex = 10;
+	test_1args("10 = %X", arg1, testcount++);
+
+	printf("\n");
+}
+
+void test_p()
+{
+	int testcount = 1;
+
+	union argUnion arg1;
+
+	printf("pointer adress tests:\n");
+
+	arg1.argpointer = "test";
+	test_1args("%p", arg1, testcount++);
+	arg1.argpointer = NULL;
+	test_1args("%p", arg1, testcount++);
+	arg1.argpointer = &testcount;
+	test_1args("%p", arg1, testcount++);
 
 	printf("\n");
 }
@@ -297,7 +370,7 @@ void test_pct()
 	union argUnion arg1;
 
 	printf("percentage %% tests:\n");
-	
+
 	test_0args("%%", testcount++);
 	test_0args("%%%% %%", testcount++);
 	arg1.argddigit = 42;
