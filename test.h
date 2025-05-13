@@ -12,6 +12,18 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
+void test_basics();
+void test_c();
+void test_s();
+void test_p();
+void test_d();
+void test_i();
+void test_u();
+void test_lx();
+void test_ux();
+void test_pct();
+void test_multipleargs();
+
 union argUnion
 {
 	char argchar;

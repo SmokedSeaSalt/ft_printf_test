@@ -9,17 +9,6 @@
 #include "test.h"
 
 
-void test_basics();
-void test_c();
-void test_s();
-void test_p();
-void test_d();
-void test_i();
-void test_u();
-void test_lx();
-void test_ux();
-void test_pct();
-
 int main(void)
 {
 	test_basics();
@@ -32,10 +21,72 @@ int main(void)
 	test_lx();
 	test_ux();
 	test_pct();
+	test_multipleargs();
 
 	//test_multiple args();
+}
 
+void test_8args(const char *str, union argUnion arg1, union argUnion arg2, union argUnion arg3,
+	union argUnion arg4, union argUnion arg5, union argUnion arg6, union argUnion arg7,
+	union argUnion arg8, int test_count)
+{
+	int exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
+	//save default stdout
+	int default_stdout = dup(STDOUT_FILENO);
+
+	int ret_length;
+
+	union argUnion arg1union;
+
+	//redirect from stdout to exp.txt
+	dup2(exp_file, STDOUT_FILENO);
+	ret_length = printf(str, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+	printf(" | ret = %d\n", ret_length);
+	fflush(stdout);
+
+	//redirect from exp.txt to res.txt
+	dup2(res_file, STDOUT_FILENO);
+	ret_length = ft_printf(str, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+	printf(" | ret = %d\n", ret_length);
+	fflush(stdout);
+
+	//restore default stdout
+	dup2(default_stdout, STDOUT_FILENO);
+
+	//compare results
+	lseek(exp_file, 0, SEEK_SET);
+	lseek(res_file, 0, SEEK_SET);
+
+	//create buffer to read files
+	char *buffer_exp, *buffer_res;
+	buffer_exp = calloc(1024, sizeof(char));
+	buffer_res = calloc(1024, sizeof(char));
+
+	if (buffer_exp == NULL || buffer_res == NULL)
+		exit(-1);
+
+	int exp_len = read(exp_file, buffer_exp, 1024);
+	int res_len = read(res_file, buffer_res, 1024);
+
+	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
+	{
+		printf("%s%d:OK %s", KGRN, test_count, KNRM);
+		fflush(stdout);
+	}
+	else
+	{
+		printf("%s%d:KO\n%s", KRED, test_count, KNRM);
+		printf("exp:%s != res:%s\n", buffer_exp, buffer_res);
+		fflush(stdout);
+	}
+
+	close(exp_file);
+	close(res_file);
+
+	free(buffer_exp);
+	free(buffer_res);
 }
 
 void test_1args(const char *str, union argUnion arg1, int test_count)
@@ -171,6 +222,7 @@ void test_basics()
 	printf("Basic tests:\n");
 
 	test_0args("test", testcount++);
+	test_0args("\n\t    some whitespaces", testcount++);
 	test_0args((char*)NULL, testcount++);
 	test_0args("", testcount++);
 	//test_0args("%%", testcount++);
@@ -379,10 +431,30 @@ void test_pct()
 	printf("\n");
 }
 
+void test_multipleargs()
+{
 
-/*
-	//if %p is NULL
-	ret = printf("%p", (char *)NULL);
-	printf(" | ret = %d\n", ret);
-*/
+	int testcount = 1;
 
+	printf("8 arguments tests:\n");
+
+	union argUnion arg1;
+	arg1.argchar = 'X';
+	union argUnion arg2;
+	arg2.argddigit = 42;
+	union argUnion arg3;
+	arg3.argidigit = -42;
+	union argUnion arg4;
+	arg4.arglhex = 345;
+	union argUnion arg5;
+	arg5.argpointer = &arg4;
+	union argUnion arg6;
+	arg6.argstring = "teststring";
+	union argUnion arg7;
+	arg7.argudigit = 234235;
+	union argUnion arg8;
+	arg8.arguhex = 2875;
+	test_8args("%c%d%i%x%p%s%u%X", arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, testcount);
+
+	printf("\n");
+}
