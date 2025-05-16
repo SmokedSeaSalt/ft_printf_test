@@ -22,8 +22,6 @@ int main(void)
 	test_ux();
 	test_pct();
 	test_multipleargs();
-
-	//test_multiple args();
 }
 
 void test_8args(const char *str, union argUnion arg1, union argUnion arg2, union argUnion arg3,
@@ -37,8 +35,6 @@ void test_8args(const char *str, union argUnion arg1, union argUnion arg2, union
 	int default_stdout = dup(STDOUT_FILENO);
 
 	int ret_length;
-
-	union argUnion arg1union;
 
 	//redirect from stdout to exp.txt
 	dup2(exp_file, STDOUT_FILENO);
